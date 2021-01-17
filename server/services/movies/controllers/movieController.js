@@ -20,17 +20,9 @@ class MovieController {
   }
 
   static async createMovie(req, res) {
-    const {title, overview, poster_path, popularity, tags} = req.body
-    const payload = {
-      title,
-      overview,
-      poster_path,
-      popularity: +popularity,
-      tags: tags.split(",")
-    }
     try {
-      const data = await Movie.create(payload)
-      res.status(201).json(data.ops)
+      const data = await Movie.create(req.body)
+      res.status(201).json(data.ops[0])
     } catch (err) {
       console.log(err) 
     }
@@ -38,16 +30,8 @@ class MovieController {
 
   static async updateMovie(req, res) {
     try {
-      const {title, overview, poster_path, popularity, tags} = req.body
-      const payload = {
-        title,
-        overview,
-        poster_path,
-        popularity: +popularity,
-        tags: tags.split(",")
-      }
-      await Movie.update(payload, req.params.id)
-      res.status(201).json(payload)
+      const data = await Movie.update(req.body, req.params.id)
+      res.status(201).json(data.value)
     } catch (err) {
       console.log(err)
     }
@@ -56,7 +40,7 @@ class MovieController {
   static async deleteMovie(req, res) {
     try {
       const data = await Movie.remove(req.params.id)
-      res.status(200).json({message: "Data Deleted Successfully"})
+      res.status(200).json(data.value)
     } catch (err) {
       console.log(err)
     }

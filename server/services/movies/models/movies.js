@@ -16,12 +16,11 @@ class MovieModel {
   }
 
   static update(payload, id) {
-    console.log(payload, id)
-    return Movies.updateOne({ _id: ObjectId(id) }, { $set: payload }) 
+    return Movies.findOneAndUpdate({_id: ObjectId(id)}, {$set: payload}, {returnNewDocument: true})
   }
 
   static remove(id) {
-    return Movies.deleteOne({_id: ObjectId(id)})
+    return Movies.findOneAndDelete({_id: ObjectId(id)})
   }
 }
 

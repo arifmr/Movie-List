@@ -16,11 +16,11 @@ class TvSeriesModel {
   }
 
   static update(payload, id) {
-    return tvSeries.updateOne({ _id: ObjectId(id) }, { $set: payload }) 
+    return tvSeries.findOneAndUpdate({_id: ObjectId(id)}, {$set: payload}, {returnNewDocument: true})
   }
 
   static remove(id) {
-    return tvSeries.deleteOne({_id: ObjectId(id)})
+    return tvSeries.findOneAndDelete({_id: ObjectId(id)})
   }
 }
 
