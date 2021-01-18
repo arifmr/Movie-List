@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 
 const ADD_MOVIE = gql`
-  mutation createMovie($movieAndSeriesInput: newMovie){
-    addMovie(newMovie: $movieAndSeriesInput){
-      id
+  mutation createMovie($title: String!, $overview: String!, $poster_path: String!, $popularity: Float!, $tags: [String!]!){
+    addMovie(title: $title, overview: $overview, poster_path: $poster_path, popularity: $popularity, tags: $tags){
+      _id
       title
       overview
       poster_path
@@ -15,42 +15,22 @@ const ADD_MOVIE = gql`
 `
 
 function AddMovie() {
-  const [inputMovie, setInputMovie] = useState({
-    title: "",
-    overview: "",
-    poster_path: "",
-    popularity: "",
-    tags: []
-  })
-  const [ addMovie, { data } ] = useMutation(ADD_MOVIE)
-
-  function handleChange (e) {
-    const name = e.target.name
-    let value = e.target.value
-    if (name === "popularity") {
-      value = Number(value)
-      if (value === 0) {
-        value = ""
-      }
-    }
-    if (name === "tags") {
-      value = value.split(',')
-    }
-    setInputMovie({
-      ...inputMovie,
-      [name]: value
-    })
-  }
+  const [title, setTitle] = useState("")
+  const [overview, setOverview] = useState("")
+  const [poster_path, setPoster_path] = useState("")
+  const [popularity, setPopularity] = useState("")
+  const [tags, setTags] = useState([])
+  const [ addMovie ] = useMutation(ADD_MOVIE)
 
   function onSubmit(e) {
     e.preventDefault()
-    // console.log({ variables: {
-    //   newData: inputMovie
-    // } })
     addMovie({ variables: {
-      newMovie: inputMovie
-    } })
-    // console.log(data)
+      title,
+      overview,
+      poster_path,
+      popularity,
+      tags
+    }})
   }
 
   return (
@@ -58,15 +38,15 @@ function AddMovie() {
       <h1>Add Movie</h1>
       <form onSubmit={e => onSubmit(e)}>
         <label htmlFor="title">Title</label> <br />
-        <input onChange={handleChange} name="title" value={inputMovie.title} placeholder="movie title" required /> <br /> <br />
+        <input onChange={e => setTitle(e.target.value)} name="title" value={title} placeholder="movie title" required /> <br /> <br />
         <label htmlFor="overview">Overview</label> <br />
-        <input onChange={handleChange} name="overview" value={inputMovie.overview} placeholder="movie overview" required /> <br /> <br />
+        <input onChange={e => setOverview(e.target.value)} name="overview" value={overview} placeholder="movie overview" required /> <br /> <br />
         <label htmlFor="poster_path">Poster Path</label> <br />
-        <input onChange={handleChange} name="poster_path" value={inputMovie.poster_path} placeholder="movie poster_path" required /> <br /> <br />
+        <input onChange={e => setPoster_path(e.target.value)} name="poster_path" value={poster_path} placeholder="movie poster_path" required /> <br /> <br />
         <label htmlFor="popularity">Popularity</label> <br />
-        <input type="number" onChange={handleChange} name="popularity" value={inputMovie.popularity} step="0.1" placeholder="movie popularity" required /> <br /> <br />
+        <input type="number" onChange={e => setPopularity(Number(e.target.value))} name="popularity" value={popularity} step="0.1" placeholder="movie popularity" required /> <br /> <br />
         <label htmlFor="tags">Tags</label> <br />
-        <input onChange={handleChange} name="tags" value={inputMovie.tags} placeholder="movie tags" required /> <br /> <br />
+        <input onChange={e => setTags(e.target.value.split(','))} name="tags" value={tags} placeholder="movie tags" required /> <br /> <br />
         <input className="btn btn-primary" type="submit" value="Add Movie" />
       </form>
     </div>

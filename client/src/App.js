@@ -10,6 +10,8 @@ import DetailMovie from './Pages/DetailMovie'
 import DetailSeries from './Pages/DetailSeries'
 import AddMovie from './Pages/AddMovie'
 import AddSeries from './Pages/AddSeries'
+import EditMovie from './Pages/EditMovie'
+import EditSeries from './Pages/EditSeries'
 
 function App() {
   return (
@@ -21,10 +23,12 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/movies" component={Movies} />
             <Route exact path="/series" component={Series} />
-            <Route exact path="/movies/add" component={AddMovie} />
-            <Route exact path="/series/add" component={AddSeries} />
             <Route exact path="/movies/:id" component={DetailMovie} />
             <Route exact path="/series/:id" component={DetailSeries} />
+            <Route exact path="/add-movie/" component={AddMovie} />
+            <Route exact path="/add-series/" component={AddSeries} />
+            <Route exacth path="/edit-movie/:id" component={EditMovie} />
+            <Route exacth path="/edit-series/:id" component={EditSeries} />
           </Switch>
         </div>
       </BrowserRouter>

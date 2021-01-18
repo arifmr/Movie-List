@@ -1,11 +1,32 @@
 import React from 'react'
+import { gql, useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
+const DELETE_SERIES = gql`
+  mutation removeSeries($_id: ID!) {
+    deleteSeries(_id: $_id) {
+      _id,
+      title,
+      overview,
+      poster_path,
+      popularity,
+      tags
+    }
+  }
+`
+
 function SeriesCard({series}) {
+  const [deleteSeries] = useMutation(DELETE_SERIES)
   const history = useHistory()
 
-  function move(id) {
-    history.push('/series/'+id)
+  function move(url) {
+    history.push(url)
+  }
+
+  function remove(_id) {
+    deleteSeries({
+      variables: { _id }
+    })
   }
 
   return (
@@ -18,10 +39,12 @@ function SeriesCard({series}) {
         <p>Title: {series.title}</p>
         <p>Overview: {series.overview}</p>
         <p>Popularity: {series.popularity}</p>
-        <p>Tags: {series.tags}</p>
+        <p>Tags: {JSON.stringify(series.tags)}</p>
       </div>
       <div className="card-footer">
-        <button className="btn btn-primary" onClick={() => move(series._id)}>Detail</button>
+        <button className="btn btn-primary" onClick={() => move('/series/'+series._id)}>Detail</button>
+        <button className="btn btn-primary" onClick={() => move('/edit-series/'+series._id)}>Edit</button>
+        <button className="btn btn-danger" onClick={() => remove(series._id)}>Delete</button>
       </div>
     </div>
   )

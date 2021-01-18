@@ -23,6 +23,10 @@ function DetailSeries() {
   })
   const history = useHistory()
 
+  function move(url) {
+    history.push(url)
+  }
+
   if (loading) return <Loader />
   if (error) return <div>Error....</div>
   return (
@@ -38,7 +42,7 @@ function DetailSeries() {
         <p>Tags: {data.seriesById.tags}</p>
       </div>
       <div className="card-footer">
-        Footer
+        <button className="btn btn-primary" onClick={() => move('/series')}>Back</button>
       </div>
     </div>
   )

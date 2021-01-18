@@ -23,6 +23,10 @@ function DetailMovie() {
   })
   const history = useHistory()
 
+  function move(url) {
+    history.push(url)
+  }
+
   if (loading) return <Loader />
   if (error) return <div>Error....</div>
   return (
@@ -38,7 +42,7 @@ function DetailMovie() {
         <p>Tags: {data.movie.tags}</p>
       </div>
       <div className="card-footer">
-        Footer
+        <button className="btn btn-primary" onClick={() => move('/movies')}>Back</button>
       </div>
     </div>
   )

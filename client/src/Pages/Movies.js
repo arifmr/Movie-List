@@ -18,7 +18,7 @@ const GET_MOVIES = gql`
 `
 
 function Movies() {
-  const { data, error, loading, refetch } = useQuery(GET_MOVIES)
+  const { data, error, loading } = useQuery(GET_MOVIES)
   const history = useHistory()
 
   function move(url) {
@@ -30,7 +30,7 @@ function Movies() {
   return (
     <>
       <h1>Movies</h1>
-      <button className="btn btn-primary" onClick={() => move('/movies/add')}>Add Movie</button>
+      <button className="btn btn-primary" onClick={() => move('/add-movies')}>Add Movie</button>
       <div className="row">
         {
           data.movies.map(movie => <MovieCard key={movie._id} movie={movie} />)

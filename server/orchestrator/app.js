@@ -5,6 +5,8 @@ const redis = new Redis();
 const urlMovies = 'http://localhost:4001/movies/'
 const urlSeries = 'http://localhost:4002/tvseries/'
 
+console.log('masuk')
+
 const typeDefs = gql`
   type Query {
       movies: [Movies]
@@ -30,25 +32,16 @@ const typeDefs = gql`
     popularity: Float
     tags: [String]
   }
-
-  input MovieAndSeriesInput {
-    title: String
-    overview: String
-    poster_path: String
-    popularity: Float
-    tags: [String]
-  }
-
+  
   type Mutation {
-    addMovie(newMovie: MovieAndSeriesInput): Movies
-    updateMovie(_id: ID!, updatedMovie: MovieAndSeriesInput): Movies
+    addMovie(title: String!, overview: String!, poster_path: String!, popularity: Float!, tags: [String!]!): Movies
+    updateMovie(_id: ID!, title: String!, overview: String!, poster_path: String!, popularity: Float!, tags: [String!]!): Movies
     deleteMovie(_id: ID!): Movies
-    addSeries(newSeries: MovieAndSeriesInput): Series
-    updateSeries(_id: ID!, updatedSeries: MovieAndSeriesInput): Series
+    addSeries(title: String!, overview: String!, poster_path: String!, popularity: Float!, tags: [String!]!): Series
+    updateSeries(_id: ID!, title: String!, overview: String!, poster_path: String!, popularity: Float!, tags: [String!]!): Series
     deleteSeries(_id: ID!): Series
   }
 `;
-
 const resolvers = {
   Query: {
     movies: async () => {
@@ -98,30 +91,30 @@ const resolvers = {
   },
   Mutation: {
     addMovie: async (_, args) => {
-      console.log('masuk')
       try {
         const payload = {
-          title: args.newMovie.title,
-          overview: args.newMovie.overview,
-          poster_path: args.newMovie.poster_path,
-          popularity: args.newMovie.popularity,
-          tags: args.newMovie.tags
+          title: args.title,
+          overview: args.overview,
+          poster_path: args.poster_path,
+          popularity: args.popularity,
+          tags: args.tags
         }
         const newMovie = await axios.post(urlMovies, payload)
         await redis.del("movies")
         return newMovie.data
       } catch (err) {
+        console.log('masuk')
         console.log(err)
       }
     },
     updateMovie: async (_, args) => {
       try {
         const payload = {
-          title: args.updatedMovie.title,
-          overview: args.updatedMovie.overview,
-          poster_path: args.updatedMovie.poster_path,
-          popularity: args.updatedMovie.popularity,
-          tags: args.updatedMovie.tags
+          title: args.title,
+          overview: args.overview,
+          poster_path: args.poster_path,
+          popularity: args.popularity,
+          tags: args.tags
         }
         const updatedMovie = await axios.put(urlMovies+args._id, payload)
         await redis.del("movies")
@@ -142,11 +135,11 @@ const resolvers = {
     addSeries: async (_, args) => {
       try {
         const payload = {
-          title: args.newSeries.title,
-          overview: args.newSeries.overview,
-          poster_path: args.newSeries.poster_path,
-          popularity: args.newSeries.popularity,
-          tags: args.newSeries.tags
+          title: args.title,
+          overview: args.overview,
+          poster_path: args.poster_path,
+          popularity: args.popularity,
+          tags: args.tags
         }
         const newSeries = await axios.post(urlSeries, payload)
         await redis.del("series")
@@ -158,11 +151,11 @@ const resolvers = {
     updateSeries: async (_, args) => {
       try {
         const payload = {
-          title: args.updatedSeries.title,
-          overview: args.updatedSeries.overview,
-          poster_path: args.updatedSeries.poster_path,
-          popularity: args.updatedSeries.popularity,
-          tags: args.updatedSeries.tags
+          title: args.title,
+          overview: args.overview,
+          poster_path: args.poster_path,
+          popularity: args.popularity,
+          tags: args.tags
         }
         const updatedSeries = await axios.put(urlSeries+args._id, payload)
         await redis.del("series")
