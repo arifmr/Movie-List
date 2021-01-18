@@ -55,7 +55,7 @@ const resolvers = {
       const cache = await redis.get("movies")
       try {
         if (cache) {
-          res.status(200).json(JSON.parse(cache))
+          return JSON.parse(cache)
         } else {
           const result = await axios.get(urlMovies)
           await redis.set("movies", JSON.stringify(result.data))
@@ -77,7 +77,7 @@ const resolvers = {
       const cache = await redis.get("series")
       try {
         if (cache) {
-          res.status(200).json(JSON.parse(cache))
+          return JSON.parse(cache)
         } else {
           const result = await axios.get(urlSeries)
           await redis.set("series", JSON.stringify(result.data))
@@ -98,6 +98,7 @@ const resolvers = {
   },
   Mutation: {
     addMovie: async (_, args) => {
+      console.log('masuk')
       try {
         const payload = {
           title: args.newMovie.title,
