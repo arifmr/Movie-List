@@ -22,13 +22,17 @@ export default function Categories() {
   if (error) return <div>Error....</div>
   return (
     <>
-      {path === '/movies' ? <h1>Movies</h1>: <h1>Series</h1>}
-      <button className="btn btn-primary" onClick={() => move()}>{path === '/movies' ? <span>Add Movie</span>: <span>Add Series</span>}</button>
-      <div className="row">
+     <div className="container card p-0 mt-5 mb-5">
+      <div className="card-header text-center d-flex">
+        {path === '/movies' ? <h1 className="ml-auto pl-5">Movies</h1>: <h1 className="ml-auto pl-5">Series</h1>}
+        <button className="btn btn-primary ml-auto" onClick={() => move()}>{path === '/movies' ? <span>Add Movie</span>: <span>Add Series</span>}</button>
+      </div>
+      <div className="card-body row justify-content-center">
         {
           path === '/movies' ? data.movies.map(result => <Card key={result._id} data={result} />) : data.series.map(result => <Card key={result._id} data={result} />)
         }
       </div>
+     </div>
     </>
   )
 }

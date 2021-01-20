@@ -20,9 +20,10 @@ export default function Detail() {
   if (loading) return <Loader />
   if (error) return <div>Error....</div>
   return (
-    <div className="container card">
+    <div className="container card mt-5">
       <div className="card-header d-flex">
-        <button className="btn btn-outline-secondary col-1" onClick={() => move()}>Back</button>
+        <button className="btn btn-outline-secondary col-1 mr-auto" onClick={() => move()}>Back</button>
+        <h3 className="mr-auto pr-5">Detail</h3>
       </div>
       <Card data={data.movie ? data.movie:data.seriesById} id={id} path={path} />
     </div>

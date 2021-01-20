@@ -131,7 +131,7 @@ export const DELETE_SERIES = gql`
 `
 
 export const QUERY_GET_FAVORITES = gql`
-  query GetFavoritesItem {
-    favoritesItem @client
+  query GetFavorites {
+    favorite @client
   }
 `

@@ -41,19 +41,27 @@ function Home() {
   if (error) return <div>Error....</div>
   return (
     <>
-      <h1>Movies</h1>
-      <button className="btn btn-primary" onClick={() => move('/add-movie')}>Add Movie</button>
-      <div className="row">
-        {
-          data.movies.map(movie => <Card key={movie._id} data={movie} refetch={refetch} />)
-        }
+      <div className="container card p-0 mt-5 mb-5">
+        <div className="card-header text-center d-flex">
+          <h1 className="ml-auto pl-5">Movies</h1>
+          <button className="btn btn-primary btn-sm ml-auto" onClick={() => move('/add-movie')}>Add Movie</button>
+        </div>
+        <div className="card-body row justify-content-center">
+          {
+            data.movies.map(movie => <Card key={movie._id} data={movie} refetch={refetch} />)
+          }
+        </div>
       </div>
-      <h1>Series</h1>
-      <button className="btn btn-primary" onClick={() => move('/add-series')}>Add Series</button>
-      <div className="row">
-        {
-          data.series.map(series => <Card key={series._id} data={series} refetch={refetch} />)
-        }
+      <div className="container card p-0 mb-5">
+        <div className="card-header text-center d-flex">
+          <h1 className="ml-auto pl-5">Series</h1>
+          <button className="btn btn-primary ml-auto" onClick={() => move('/add-series')}>Add Series</button>
+        </div>
+        <div className="card-body row justify-content-center">
+          {
+            data.series.map(series => <Card key={series._id} data={series} refetch={refetch} />)
+          }
+        </div>
       </div>
     </>
   )
