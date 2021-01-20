@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mongo:
+    image: "mongo:4.2"
+    ports:
+      - "17017:27017"
+    command: mongod
+  movies:
+    depends_on:
+      - mongo
+    build: ./movies
+    ports:
+      - "4001:4001"
+  series:
+    depends_on:
+      - mongo
+    build: ./series
+    ports:
+      - "4002:4002"
