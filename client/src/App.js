@@ -4,14 +4,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import client from './config/graphql'
 import Navbar from './Components/Navbar'
 import Home from './Pages/Home'
-import Movies from './Pages/Movies'
-import Series from './Pages/Series'
-import DetailMovie from './Pages/DetailMovie'
-import DetailSeries from './Pages/DetailSeries'
-import AddMovie from './Pages/AddMovie'
-import AddSeries from './Pages/AddSeries'
-import EditMovie from './Pages/EditMovie'
-import EditSeries from './Pages/EditSeries'
+import Categories from './Pages/Categories'
+import Detail from './Pages/Detail'
+import Add from './Pages/Add'
+import Edit from './Pages/Edit'
+import Favorite from './Pages/Favorite'
 
 function App() {
   return (
@@ -21,14 +18,15 @@ function App() {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/movies" component={Movies} />
-            <Route exact path="/series" component={Series} />
-            <Route exact path="/movies/:id" component={DetailMovie} />
-            <Route exact path="/series/:id" component={DetailSeries} />
-            <Route exact path="/add-movie/" component={AddMovie} />
-            <Route exact path="/add-series/" component={AddSeries} />
-            <Route exacth path="/edit-movie/:id" component={EditMovie} />
-            <Route exacth path="/edit-series/:id" component={EditSeries} />
+            <Route exact path="/movies" component={Categories} />
+            <Route exact path="/series" component={Categories} />
+            <Route exact path="/favorites" component={Favorite} />
+            <Route exact path="/movies/:id" component={Detail} />
+            <Route exact path="/series/:id" component={Detail} />
+            <Route exact path="/add-movie/" component={Add} />
+            <Route exact path="/add-series/" component={Add} />
+            <Route exacth path="/edit-movie/:id" component={Edit} />
+            <Route exacth path="/edit-series/:id" component={Edit} />
           </Switch>
         </div>
       </BrowserRouter>

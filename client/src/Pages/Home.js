@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react'
 import { useHistory } from 'react-router-dom'
-import MovieCard from '../Components/MovieCard'
-import SeriesCard from '../Components/SeriesCard'
 import { gql, useQuery } from '@apollo/client'
 import Loader from '../Components/Loader'
+import Card from '../Components/Card'
 
 const GET_ALL = gql`
   query getAll {
@@ -36,24 +35,24 @@ function Home() {
 
   useEffect(() => {
     refetch()
-  }, [])
+  }, [refetch])
 
   if (loading) return <Loader />
   if (error) return <div>Error....</div>
   return (
     <>
       <h1>Movies</h1>
-      <button className="btn btn-primary" onClick={() => move('/add-movies')}>Add Movie</button>
+      <button className="btn btn-primary" onClick={() => move('/add-movie')}>Add Movie</button>
       <div className="row">
         {
-          data.movies.map(movie => <MovieCard key={movie._id} movie={movie} refetch={refetch} />)
+          data.movies.map(movie => <Card key={movie._id} data={movie} refetch={refetch} />)
         }
       </div>
       <h1>Series</h1>
       <button className="btn btn-primary" onClick={() => move('/add-series')}>Add Series</button>
       <div className="row">
         {
-          data.series.map(series => <SeriesCard key={series._id} series={series} refetch={refetch} />)
+          data.series.map(series => <Card key={series._id} data={series} refetch={refetch} />)
         }
       </div>
     </>
